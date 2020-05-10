@@ -11,7 +11,7 @@ def umpire
   end
 end
 
-p umpire
+p umpire    #if文内の処理は適切でしょうか？
 
 
 # def umpire
@@ -25,7 +25,9 @@ p umpire
 #   end
 # end
 #
-# p umpire
+# p umpire    #こちらは初期のメソッド内のif文が両方反応してしまう
+
+
 
 # num_a = rand(0..1)
-# p num_a ? 1 : 0
+p rand(0..1) == 1 ? true : false    #三項演算子でできる？

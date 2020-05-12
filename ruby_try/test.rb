@@ -22,6 +22,6 @@
 working_mate = ["Kondo","Yasuda","Saito","Ito","Inoue"] #仕事仲間
 work_somebody = working_mate.shuffle[1]
 delicate_relation = working_mate.shuffle[1]
-
+,"Saito","Ito","Inoue"
 p work_somebody
 p delicate_relation

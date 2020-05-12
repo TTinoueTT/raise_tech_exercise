@@ -1,0 +1,107 @@
+# •Communicationというクラスを作ってみよう。
+# •greetというメソッドを定義してみよう。
+# •クラスを継承して新しいサブクラスを作ってみよう。
+# WorkplaceCommunication(職場)とか。
+# •greetというメソッド内でHelloという言葉を受けたら、
+# Helloと返す処理を実装してみよう。
+# •職場かどうかを判断するメソッドを作って、
+# 職場じゃなければ挨拶しないようにしてみよう（酷い）
+# •Communicationクラスに新しく話しかけてきた人が誰か
+# (同僚とか上司とか)で応答を返すか、例外を返すような処理を作ってみよう。
+# •例外の条件や例外じゃなかった場合にどういった応答を返すかは好きなように作ってOK。
+# メソッドの使い方、if文や例外処理の使い方に慣れてみよう。
+# •例外クラスは自作も可能。
+# 何か面白い例外を継承して、勝手に自作してもいいし、既存の例外クラスを使ってもいい。
+# とにかく例外をraiseしてみよう。
+# ------------------------------------------------------------------
+require "date"   #Dateクラスを使えるようにする
+#普段のコミュニケーションclass↓-----------------------------------------
+class Communication
+  now = DateTime.now
+  @@now_time = now.hour
+
+  def initialize(friends_name)
+    @friends_name = friends_name
+  end
+
+  def greet #時間によって挨拶が変わる
+    if @@now_time <= 7  #0時 ~ 7時台
+      'zzZZ'
+    elsif @@now_time <= 12  #8時 ~ 12時台
+      'おはよう'
+    elsif @@now_time <= 17  #13時 ~ 17時台
+      'こんにちは'
+    elsif @@now_time <= 21  #18時 ~ 21時台
+      'こんばんは'
+    else
+      'おやすみなさい'  #それ以外の時間
+    end
+  end
+
+  def when_said_hello   #挨拶をした時
+    puts "#{@friends_name}、#{greet}"
+  end
+# greet rescue puts '話しかけないでください'  #class内は作動、メソッド内はダメ
+end
+
+#職場でのコミュニケーションclass↓----------------------------------------
+class WorkplaceCommunication < Communication
+
+  def initialize(work_name, delicate_name)
+    @work_name = work_name
+    @delicate_name = delicate_name
+  end
+
+  def greet #時間によって挨拶が変わる
+    if @@now_time <= 7 #0時 ~ 7時台
+      'zzZZ'
+    elsif @@now_time <= 12 #8時 ~ 12時台
+      'おはようございます'
+    elsif @@now_time <= 17 #13時 ~ 17時台
+      'お疲れ様です'
+    elsif @@now_time <= 21 #18時 ~ 21時台
+      'お疲れ様でした、お先に失礼いたします'
+    else
+      '時間外に話しかけないでください'
+    end
+  end
+
+  def when_said_hello   #挨拶をした時
+    p @work_name
+    puts "#{@work_name}さん、#{greet}" if @work_name != @delicate_name
+  end
+end
+where_are_u_say_hello rescue puts '申し訳ございません'  #class内は作動、メソッド内はダメ
+
+# ------------------------------------------------------------------
+#実行処理エリア
+friends = ["Bob","Ron","Ellie","Tom","Mike"] #友人
+friends_somebody = friends.shuffle[1]
+working_mate = ["Kondo","Yasuda"] #仕事仲間
+work_somebody = working_mate.shuffle[1]
+delicate_relation = working_mate.shuffle[1] #微妙な関係
+
+$cmc = Communication.new(friends_somebody)  #このインスタンスの作り方は大丈夫でしょうか
+$work_cmc = WorkplaceCommunication.new(work_somebody, delicate_relation)
+
+def where_are_u_say_hello  #どこで挨拶する
+  num = rand(0..1)
+  place = num == 0 ? 'Working_p' : 'private_p'  #ランダムに場所を設定
+  if place == 'Working_p'
+    $cmc.when_said_hello
+  else
+    $work_cmc.when_said_hello
+  end
+end
+
+
+where_are_u_say_hello
+
+
+#仕事場で話しかけてきたら
+#友達が話しかけたら
+
+#    ''
+#    '申し訳ございません' workaholic
+
+# ------------------------------------------------------------------

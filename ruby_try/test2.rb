@@ -1,16 +1,51 @@
-#Communicationというクラスを作ってみよう。
+# ------------------------------------------------------------------
+require "date"   #Dateクラスを使えるようにする
+#普段のコミュニケーションclass↓-----------------------------------------
 class Communication
-  attr_accessor :morninng, :noon, :evening
-#greetというメソッドを定義してみよう。
-#greetというメソッド内でHelloという言葉を受けたら、Helloと返す処理を実装してみよう。
-  def greed
-    puts "Please say hello"
-    call = gets  #getsはデフォルトで文字列を返す、数値の場合は.to_i
-    if call == "hello\n"  #入力データを puts でなく p で確認 # @変数は使い方を確認してみるといいですね
-      puts "hello"
+  # attr_accessor  :
+  now = DateTime.now
+  @@now_time = now.hour
+
+
+  greeting_change =    #時間によって挨拶が変わる
+    if @@now_time <= 7  #0時 ~ 7時台
+      "zzZZ"
+    elsif @@now_time <= 12  #8時 ~ 12時台
+      "おはよう"
+    elsif @@now_time <= 17  #13時 ~ 17時台
+      "こんにちは"
+    elsif @@now_time <= 21  #18時 ~ 21時台
+      "こんばんは"
+    else
+      "おやすみなさい"  #それ以外の時間
     end
+
+  # def greeting_reply
+  #   if @now_time <= 7  #0時 ~ 7時台
+  #     'そろそろおきんしゃい'
+  #   elsif @now_time <= 12  #8時 ~ 12時台
+  #     'いってらっしゃい'
+  #   elsif @now_time <= 17  #13時 ~ 17時台
+  #     'お元気そうで'
+  #   elsif @now_time <= 21  #18時 ~ 21時台
+  #     'さようなら'
+  #   else
+  #     'zzZZ'  #それ以外の時間
+  #   end
+  # end
+
+  def greed
+    puts greeting_change
+    reply = gets.chomp
+    if reply == greeting_change  #同じ答えじゃないと、今は○時ですよ?でもう一度挨拶を求める
+      puts 'よくできました！'
+    end
+    # p raise
   end
+
 end
-communication = Communication.new
-     #↑オブジェクトの頭文字は大文字にできない 変数名とclass名が一緒になっているとできない?
-communication.greed
+# 例外処理-----------------------------------------------------------
+
+
+cmc = Communication.new
+cmc.greed

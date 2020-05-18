@@ -8,7 +8,7 @@ class Communication
 
   def  greeting_change    #時間によって挨拶が変わる
     now = DateTime.now
-    now_time = now.hour
+    now_time = 10#now.hour
 
     if (7..11).include?(now_time) #7時 ~ 11時台
       "Good morning!"
@@ -41,7 +41,7 @@ class Communication
 
 
   def second_res
-    if @response_ur_place == @place_1
+    if @response_ur_place == @main_place
       puts "#{@friends_somebody}:Surprised suddenly? I'm #{@friends_somebody}!!"
       puts "Long time no see! How are u #{@friends_somebody}!?"
     end
@@ -57,7 +57,7 @@ class WorkplaceCommunication < Communication
 
 
   def second_res
-    if @response_ur_place == @place_2
+    if @response_ur_place == @second_place
       puts "#{@work_somebody}:sorry, that I interrupted work.I'm #{@work_somebody}"  #  お仕事中、恐れ入ります
     end
 
@@ -73,22 +73,22 @@ end
 
 friends = ["Bob","Ron","Ellie","Tom","Mike"] #友人
 working_mate = ["Kondo","Yasuda"] #仕事仲間
-place_1 = "private time"
-place_2 = "working"
+main_place = "private time"
+second_place = "working"
 cmc = Communication.new(friends)
 w_cmc = WorkplaceCommunication.new(working_mate)
 
-def where_are_u(place_1,place_2)
+def where_are_u(main_place,second_place)
   retry_count_a = 0
-  @place_1 = place_1
-  @place_2 = place_2
+  @main_place = main_place
+  @second_place = second_place
   begin
     p @response_ur_place = gets.chomp    # プライベートです か 就業中です で返答してね
-    raise if @response_ur_place != @place_2 && @response_ur_place != @place_1 #例外処理
+    raise if @response_ur_place != @second_place && @response_ur_place != @main_place #例外処理
   rescue
     retry_count_a += 1
     if retry_count_a <= 3
-      puts "A:Would u say #{@place_1} or #{@place_2}?"  #同じ挨拶をしてください
+      puts "A:Would u say #{@main_place} or #{@second_place}?"  #同じ挨拶をしてください
       retry
     else
       raise ArgumentError,"A:Can u n't even speak ur staying place?" #挨拶もできないんですか？
@@ -99,8 +99,8 @@ end
 # ---------↓実行処理↓------------------------------------------------------------
 cmc.greet      #時間帯によって変わる挨拶
 puts "A:Are you working now? Is it private time?"  #仕事中かプライベートか聞く
-where_are_u(place_1 , place_2)   #場所を決めるメソッド
-if @response_ur_place == place_1  #返答を条件分岐するメソッド
+where_are_u(main_place , second_place)   #場所を決めるメソッド
+if @response_ur_place == main_place  #返答を条件分岐するメソッド
   cmc.second_res
 else
   w_cmc.second_res

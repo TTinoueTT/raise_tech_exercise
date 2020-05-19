@@ -59,10 +59,11 @@
 
 # # ------------------------------------
 text = <<-TEXT
-名前 : 伊藤淳一
-電話 : 06(9999)9999
-電話 : 090-1234-4499
-電話 : 0398(59)4499
-電話 : 03897-5-4499
+You say yes. - @jnchito 8s
+I say no. - @BarackObama 12m
+You say stop. - @dhh 7h
+I say go go go. - @ladygaga Feb 20
+Hello, goodbye. - @BillGates 11 Apr 2015
 TEXT
-p text.scan /\d{2,5}[-(]\d{1,4}[-)]\d{4}/
+puts text.gsub(/^(.+) - (@\w+) (\d+[smh]|(?:\d+ )?[A-Z][a-z]{2} \d+)/,
+'\1, \2, \3,')

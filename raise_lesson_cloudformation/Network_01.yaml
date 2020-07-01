@@ -19,7 +19,7 @@ Resources:
       Tags:
         - Key: Name
           Value: MyRaiseSample-it-01
-  # ============= パブリックサブネットa =============================
+  # ============= パブリックサブネット1a =============================
   myRaiseTech_PublicSubnet01a:
     Type: AWS::EC2::Subnet
     Properties:
@@ -29,7 +29,7 @@ Resources:
       Tags:
         - Key: Name
           Value: MyRaiseSample-it-01
-  # ============= プライベートサブネットa =============================
+  # ============= プライベートサブネット2a =============================
   myRaiseTech_PrivateSubnet02a:
     Type: AWS::EC2::Subnet
     Properties:
@@ -39,7 +39,7 @@ Resources:
       Tags:
         - Key: Name
           Value: MyRaiseSample-it-01
-  # ============= パブリックサブネットc =============================
+  # ============= パブリックサブネット1c =============================
   myRaiseTech_PublicSubnet01c:
     Type: AWS::EC2::Subnet
     Properties:
@@ -49,7 +49,7 @@ Resources:
       Tags:
         - Key: Name
           Value: MyRaiseSample-it-01
-  # ============= プライベートサブネットc =============================
+  # ============= プライベートサブネット2c =============================
   myRaiseTech_PrivateSubnet02c:
     Type: AWS::EC2::Subnet
     Properties:
@@ -72,7 +72,7 @@ Resources:
       VpcId: !Ref myRaiseTech_VPC
       InternetGatewayId: !Ref myRaiseTech_IGW
   # ============= ルートテーブル =============================
-  myRaiseTech_RT:
+  myRaiseTech_RT-01:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref myRaiseTech_VPC
@@ -83,17 +83,17 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref myRaiseTech_PublicSubnet01a
-      RouteTableId: !Ref myRaiseTech_RT
+      RouteTableId: !Ref myRaiseTech_RT-01
   myRaiseTech_Route01:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref myRaiseTech_RT
+      RouteTableId: !Ref myRaiseTech_RT-01
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref myRaiseTech_IGW
 
 Outputs:
-  LogicalID:
+  myRaiseTech_VPC:
     Description: Information about the value
-    Value:
+    Value: !Ref myRaiseTech_VPC
     Export:
-      Name:
+      Name: !Sub "${AWS::StackName}-myRaiseTech_VPC"

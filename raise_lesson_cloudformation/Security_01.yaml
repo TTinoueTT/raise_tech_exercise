@@ -10,13 +10,13 @@ Description: RaisetechSampleSecurityLayer
 # Conditions:
 # ============= EC2インスタンス(Webサーバ)用SEC =======================
 Resources:
-  myRaiseTech_Sec_Web-01:
+  myRaiseTechSecWeb-01:
     Type: AWS::EC2::SecurityGroup
     Properties:
       # GroupName:
       GroupDescription: Allow HTTP & SSH to client host
       VpcId:
-        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTech_VPC"
+        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
       SecurityGroupIngress: # Inbound
         - IpProtocol: tcp
           FromPort: 80
@@ -36,13 +36,13 @@ Resources:
         - Key: Name
           Value: MyRaiseSample-it-01-SEC
 
-  myRaiseTech_Sec_Alb-01:
+  myRaiseTechSecAlb-01:
     Type: AWS::EC2::SecurityGroup
     Properties:
       # GroupName:
       GroupDescription: Allow HTTP to client host
       VpcId:
-        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTech_VPC"
+        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
       SecurityGroupIngress: # Inbound
         - IpProtocol: tcp
           FromPort: 80
@@ -56,13 +56,13 @@ Resources:
         - Key: Name
           Value: MyRaiseSample-it-01-SEC
 
-    myRaiseTech_Sec_Rds-01:
+    myRaiseTechSecRds-01:
       Type: AWS::EC2::SecurityGroup
       Properties:
         # GroupName:
-        GroupDescription: Allow PostgreSQL to client host
+        GroupDescription: Allow PostgreSQL to EC2
         VpcId:
-          Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTech_VPC"
+          Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
         SecurityGroupIngress: # Inbound
           - IpProtocol: tcp
             FromPort: 5432

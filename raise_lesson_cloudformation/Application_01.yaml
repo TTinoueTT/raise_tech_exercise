@@ -11,7 +11,7 @@ Description: RaisetechSampleApplicationLayer
 
 Resources:
   # =============EC2インスタンス(パブリックサブネット1a)=======================================
-  myRaiseTech_EC2-01a:
+  myRaiseTechEC2-01a:
     Type: AWS::EC2::Instance
     Properties:
       KeyName:

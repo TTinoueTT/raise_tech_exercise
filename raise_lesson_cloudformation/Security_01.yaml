@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: RaisetechSampleSecurityLayer
+# SecurityGroup,IAM,
+# Metadata:
+
+# Parameters:
+
+# Mappings:
+
+# Conditions:
+# ============= EC2インスタンス(Webサーバ)用SEC =======================
+Resources:
+  myRaiseTechSecWeb-01:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      # GroupName:
+      GroupDescription: Allow HTTP & SSH to client host
+      VpcId:
+        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
+      SecurityGroupIngress: # Inbound
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: ::/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      # SecurityGroupEgress: # Outbound
+      #   - Security Group Rule
+      Tags:
+        - Key: Name
+          Value: MyRaiseSample-it-01-SEC
+
+  myRaiseTechSecAlb-01:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      # GroupName:
+      GroupDescription: Allow HTTP to client host
+      VpcId:
+        Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
+      SecurityGroupIngress: # Inbound
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: ::/0
+      Tags:
+        - Key: Name
+          Value: MyRaiseSample-it-01-SEC
+
+    myRaiseTechSecRds-01:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        # GroupName:
+        GroupDescription: Allow PostgreSQL to EC2
+        VpcId:
+          Fn::ImportValue: !Sub "${AWS::StackName}-myRaiseTechVPC"
+        SecurityGroupIngress: # Inbound
+          - IpProtocol: tcp
+            FromPort: 5432
+            ToPort: 5432
+            CidrIp: 0.0.0.0/0
+        Tags:
+          - Key: Name
+            Value: MyRaiseSample-it-01-SEC
+
+Outputs:

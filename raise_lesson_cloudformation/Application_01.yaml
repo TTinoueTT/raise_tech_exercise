@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: RaisetechSampleApplicationLayer
+# EC2,RDS,ELB(ALB)
+# Metadata:
+
+# Parameters:
+
+# Mappings:
+
+# Conditions:
+
+Resources:
+  # =============EC2インスタンス(パブリックサブネット1a)=======================================
+  myRaiseTechEC2-01a:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName:
+      DisableApiTermination:
+      ImageId:
+      InstanceType:
+      Monitoring: true|false
+      SecurityGroupIds:
+        - sg-id
+      UserData: !Base64 |
+        #!/bin/bash -ex
+        # put your script here
+      Tags:
+        - Key: key
+          Value: value
+
+Outputs:
